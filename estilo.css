@@ -1,0 +1,146 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 09/05/2018, 20:03:32
+    Author     : Lucas
+*/
+.fundo1{
+    background: url(img/campo.jpg)fixed no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center; 
+}
+.fundo2{
+    background: white;
+}
+.fundo4{
+    background: #286090
+}
+.fundo3{
+    background: url(img/campo3.jpg)fixed no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center; 
+}
+body{ 
+   
+  
+  
+}
+body{
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 15px;
+    
+}
+a:link{
+    text-decoration: none
+} 
+.butao {
+    border-style: none; 
+    background: green; 
+    color: white; 
+    padding: 5px; 
+    font-weight: bold; 
+    font-family: Cooper Black
+}
+.butao2 {
+    border-style: none; 
+    background: green; 
+    color: white; 
+    padding: 10px; 
+    font-weight: bold; 
+    font-family: Cooper Black
+}
+.butaoBranco{
+    border-style: none; 
+    background: #000;  
+    color: white;
+    font-weight: bold;
+    font-family: Cooper Black
+}
+.tabelas{
+    background: white
+}
+.butaoAmarelo{
+    color: white;
+    background: gold; 
+    padding: 3px; 
+    font-weight: bold;
+    display: inline-block;
+    font-family: Cooper Black
+}
+.butaoVermelho{ 
+    color: white;
+    background: red; 
+    padding: 3px; 
+    font-weight: bold;
+    display: inline-block;
+    font-family: Cooper Black
+}
+.butaoVerde{ 
+    border-style: none; 
+    color: white;
+    background: green; 
+    padding: 3px; 
+    font-weight: bold;
+    display: inline-block;
+    font-family: Cooper Black
+}
+.butaoVermelho2{ 
+    color: white;
+    background: orangered; 
+    padding: 3px; 
+    font-weight: bold;
+    display: inline-block;
+    font-family: Cooper Black
+}
+.butaoCinza{
+    color: white;
+    background: darkgray;
+    padding: 3px;
+    font-weight: bold;
+    display: inline-block;
+    font-family: Cooper Black
+}
+.capitao{
+    border-radius: 20px;
+    background: orangered; 
+    padding: 2px; 
+    font-weight: bold;
+    color: white
+}
+.letrasBrancas{
+    color: blue;
+    font-family: Cooper Black
+}
+.letrasBolds{
+    font-size: 15px;
+    font-weight: bolder
+}
+.letrasLaranja{
+    color: green;
+    font-family: Arial Black
+}
+.letraswhite{
+    color: black;
+    font-family: Arial Black
+}
+.letrasAmarela{
+    color: yellow;
+    font-family: Arial Black
+}
+.centralizar{
+    alignment-adjust: central
+}
+.letrasClaras{
+    color: white;
+    font-family: Arial Black
+}
