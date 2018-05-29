@@ -105,6 +105,30 @@ $pizza = "piece1|piece2|piece3|piece4|piece5|piece6";
     }
  * 
  * 
+ * function getConnection() {
+    $usuario = 'root';
+    $senha = '';
+    $host = '127.0.0.1';
+    $conn = mysqli_connect($host, $usuario, $senha);
+
+    if (!$conn) {
+        die("NÃ£o foi possÃ­vel conectar" . mysqli_error());
+    }
+
+    mysqli_query($conn, "SET NAMES 'utf8'");
+    mysqli_query($conn, 'SET character_set_connection=utf8');
+    mysqli_query($conn, 'SET character_set_client=utf8');
+    mysqli_query($conn, 'SET character_set_results=utf8');
+
+    $bd = mysqli_select_db($conn, 'bolaocopa');
+    if (!$bd) {
+        die("NÃ£o foi possÃ­vel selecionar o banco de dados" . mysqli_error());
+    }
+
+    return $conn;
+}
+ * 
+ * 
  * <link href="main.css?version=12" />
  */
 

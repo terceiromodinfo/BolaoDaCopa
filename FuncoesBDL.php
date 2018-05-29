@@ -14,9 +14,9 @@
  * Esta função faz a conexão com servidor e o banco de dados
  */
 function getConnection() {
-    $usuario = 'root';
-    $senha = '';
-    $host = '127.0.0.1';
+    $usuario = 'b69664ac88356f';
+    $senha = '648a2e6f';
+    $host = 'us-cdbr-iron-east-04.cleardb.net';
     $conn = mysqli_connect($host, $usuario, $senha);
 
     if (!$conn) {
@@ -28,14 +28,14 @@ function getConnection() {
     mysqli_query($conn, 'SET character_set_client=utf8');
     mysqli_query($conn, 'SET character_set_results=utf8');
 
-    $bd = mysqli_select_db($conn, 'bolaocopa');
+    $bd = mysqli_select_db($conn, 'heroku_fadaa65e37559e1');
     if (!$bd) {
         die("NÃ£o foi possÃ­vel selecionar o banco de dados" . mysqli_error());
     }
 
     return $conn;
 }
-
+//mysql://:@/?reconnect=true
 /**
  * Buscar registros nas tabelas
  */
