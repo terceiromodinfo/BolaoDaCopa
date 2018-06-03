@@ -64,10 +64,16 @@ and open the template in the editor.
                         <li>
                             <a class="" href="Configuracoes.php">Configurações</a>
                         </li>
+                        <?php
+                            if (getColExpecifica("edicao", "admin")[0]["edicao"] == 1) {
+                        ?>
                         <li>
                             <a class="" href="Gols.php">Iserir gols</a>
 
                         </li>
+                        <?php
+                            }
+                        ?>
                         <?php
                             }
                         ?>
@@ -147,7 +153,7 @@ and open the template in the editor.
                                     }
 
                                     // Condição para que so exiba opções de edição se tiver liberado pelo administrador
-                                    if ((getColExpecifica("edicao", "admin")[0]["edicao"] == 1) || (isset($_SESSION['login']) && isset($_SESSION['senha']))) {
+                                    if (getColExpecifica("edicao", "admin")[0]["edicao"] == 1) {
 
 
 
@@ -216,27 +222,7 @@ and open the template in the editor.
                                             }
                                         }
                                     }
-                                    //Condição para exibir pontuação e edição ao mesmo tempo condição somente para administrador
-                                    if (isset($_SESSION['login']) && isset($_SESSION['senha'])) {
-                                        // Condição para que exiba a pontuação apenas nos jogadores
-                                        if (!(($colunas[$i] == "nome") || ($colunas[$i] == "pontos") || ($colunas[$i] == "time"))) {
-                                            $pontos = 10 * getGols($apostador[0][$colunas[$i]]);
-                                            if ($apostador[0]['capitao'] == $apostador[0][$colunas[$i]] || $apostador[0]['capitao2'] == $apostador[0][$colunas[$i]]) {
-                                                $pontos = $pontos + 10 * getGols($apostador[0][$colunas[$i]]);
-                                            }
-                                            print "<td class='letrasLaranja'>" . $pontos . "</td>";
-                                        }
-                                        // Condição para exibir a pontuação do time
-                                        if ($colunas[$i] == "time") {
-                                            $campeao = getColExpecifica("nome", "campeaoc");
-                                            // Condição para ver se já existe um campeão e se ele e igual a do apostador
-                                            if (campeao() & $campeao[0]["nome"] == $apostador[0]['time']) {
-                                                print "<td class='letrasLaranja'>100</td>";
-                                            } else {
-                                                print "<td class='letrasLaranja'>0</td>";
-                                            }
-                                        }
-                                    }
+                                    
                                     print "</tr>";
                                 }
                             }
@@ -244,7 +230,21 @@ and open the template in the editor.
                         </table>
                     </form> 
                 </div>
-                <div class="col-md-3"></div>              
+                <div class="col-md-3"></div>
+                <?php
+                if (getColExpecifica("edicao", "admin")[0]["edicao"] == 1) {
+                ?>
+                <div class="col-md-12">
+                    <div class="col-md-5"></div>
+                    <div class="col-md-2">
+                        <a class="btn butao2" href="Salvar.php?idDoUseer">Salvar</a>                    
+                    </div>
+                    <div class="col-md-5"></div>
+                    <br>
+                </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
         </div>

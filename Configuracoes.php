@@ -47,10 +47,16 @@ and open the template in the editor.
                             <a class="" href="Configuracoes.php">Configurações</a>
 
                         </li>
+                        <?php
+                            if (getColExpecifica("edicao", "admin")[0]["edicao"] == 1) {
+                        ?>
                         <li>
                             <a class="" href="Gols.php">Iserir gols</a>
 
                         </li>
+                        <?php
+                            }
+                        ?>
                         <li>
                             <a class="" href="Sair.php">Sair</a>
                         </li>
@@ -101,13 +107,15 @@ and open the template in the editor.
                             </div>
                             <div class="col-md-6 thumbnail">
 
-                                <h4>Liberar Edição para os apostadores</h4>
+                                <h4>Liberar Edição</h4>
                                 <form method='POST' action='LogicasPrincipal.php'>
                                     <?php
                                     if (getColExpecifica("edicao", "admin")[0]["edicao"]) {
-                                        print "<input class='butao' type='submit' name='liberar' value='Não'/>";
+                                        print "<h6></h6>";
+                                        print "<input class='butao' type='submit' name='liberar' value='Fechar edição'/>";                                    
                                     } else {
-                                        print "<input class='butao' type='submit' name='liberar' value='Sim'/>";
+                                        print "<h6></h6>";
+                                        print "<input class='butao' type='submit' name='liberar' value='Abrir edição'/>";
                                     }
                                     ?>
                                 </form>

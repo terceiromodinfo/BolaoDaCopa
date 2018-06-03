@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Funcões Banco de Dados e Logicas
  */
@@ -14,9 +15,9 @@
  * Esta função faz a conexão com servidor e o banco de dados
  */
 function getConnection() {
-    $usuario = 'b69664ac88356f';
-    $senha = '648a2e6f';
-    $host = 'us-cdbr-iron-east-04.cleardb.net';
+    $usuario = 'root';
+    $senha = '';
+    $host = '127.0.0.1';
     $conn = mysqli_connect($host, $usuario, $senha);
 
     if (!$conn) {
@@ -28,13 +29,14 @@ function getConnection() {
     mysqli_query($conn, 'SET character_set_client=utf8');
     mysqli_query($conn, 'SET character_set_results=utf8');
 
-    $bd = mysqli_select_db($conn, 'heroku_fadaa65e37559e1');
+    $bd = mysqli_select_db($conn, 'bolaocopa');
     if (!$bd) {
         die("NÃ£o foi possÃ­vel selecionar o banco de dados" . mysqli_error());
     }
 
     return $conn;
 }
+
 //mysql://:@/?reconnect=true
 /**
  * Buscar registros nas tabelas
@@ -76,35 +78,30 @@ function excluir($sql) {
         return false;
     }
 }
-
-/**
- * retorna a quantidade de linhas que existe em uma tabela
- */
-function getQuantLinhasTabela($tabela) {
+function getQuantLinhasTabelaAbrir($tabela) {
     $consulta = mysqli_query(getConnection(), "SELECT * FROM " . $tabela . "");
     return mysqli_num_rows($consulta);
 }
 
-/**
- * Retorna dados de apenas uma linha da tabela conforme o id passado 
- */
-function getInfoLinha($tabela, $id) {
-    if (getQuantLinhasTabela($tabela) > 0) {
+function getIdAbrir($tabela) {
 
-        $sqlPesquisaId = "SELECT * FROM " . $tabela . " WHERE id = $id";
-        $resPesquisaId = buscaRegistro($sqlPesquisaId);
-        $registro = mysqli_fetch_assoc($resPesquisaId);
+        $sqlId = "SELECT id FROM " . $tabela . "";
+        $resId = buscaRegistro($sqlId);
 
-        return $registro;
-    }
+        $contador = 0;
+        while ($registro = mysqli_fetch_assoc($resId)) {
+            $idUsuario[$contador] = $registro['id'];
+            $contador = $contador + 1;
+        }
+        return $idUsuario;
+    
 }
 
 /**
  * Retorna todos os dados de uma tabela 
  */
-function getInfoTabela($tabela) {
-    if (getQuantLinhasTabela($tabela) > 0) {
-        $idUsuario = getId($tabela);
+function getInfoTabelaAbrir($tabela) {
+        $idUsuario = getIdAbrir($tabela);
         for ($giros = 0; $giros < count($idUsuario); $giros++) {
 
             $id = $idUsuario[$giros];
@@ -115,54 +112,82 @@ function getInfoTabela($tabela) {
         }
 
         return $ResultFinal;
+}
+
+function abrirDados() {
+    $_SESSION['jogadores'] = getInfoTabelaAbrir("jogadores");
+    $_SESSION['apostadores'] = getInfoTabelaAbrir("apostadores");
+    $_SESSION['campeaoc'] = getInfoTabelaAbrir("campeaoc");
+    $_SESSION['admin'] = getInfoTabelaAbrir("admin");
+
+    $_SESSION['jogadoresCompare'] = $_SESSION['jogadores'];
+    $_SESSION['apostadoresCompare'] = $_SESSION['apostadores'];
+}
+
+/**
+ * retorna a quantidade de linhas que existe em uma tabela
+ */
+function getQuantLinhasTabela($tabela) {
+    return count($_SESSION[$tabela]);
+}
+
+/**
+ * Retorna dados de apenas uma linha da tabela conforme o id passado 
+ */
+function getInfoLinha($tabela, $id) {
+    $tabela2 = $_SESSION[$tabela];
+    for ($i = 0; $i < count($tabela2); $i++) {
+        if ($tabela2[$i]["id"] == $id) {
+            return $tabela2[$i];
+        } else {
+            
+        }
     }
+}
+
+/**
+ * Retorna todos os dados de uma tabela 
+ */
+function getInfoTabela($tabela) {
+    return $_SESSION[$tabela];
 }
 
 /**
  * retorna todos os id de uma tabela
  */
 function getId($tabela) {
-    if (getQuantLinhasTabela($tabela) > 0) {
-        $sqlId = "SELECT id FROM " . $tabela . "";
-        $resId = buscaRegistro($sqlId);
-
-        $contador = 0;
-        while ($registro = mysqli_fetch_assoc($resId)) {
-            $idUsuario[$contador] = $registro['id'];
-            $contador = $contador + 1;
+    $tabela2 = $_SESSION[$tabela];
+    for ($i = 0; $i < count($tabela2); $i++) {
+        if ($tabela2[$i]["id"]) {
+            $ids[$i] = $tabela2[$i]["id"];
         }
-        return $idUsuario;
     }
+    return $ids;
 }
 
 /**
  *  Retorna apenas os dados de uma coluna que for expecificada
  */
 function getColExpecifica($coluna, $tabela) {
-    if (getQuantLinhasTabela($tabela) > 0) {
-        $idUsuario = getId($tabela);
-        for ($giros = 0; $giros < count($idUsuario); $giros++) {
-
-            $id = $idUsuario[$giros];
-            $sqlPesquisaId = "SELECT " . $coluna . " FROM " . $tabela . " WHERE id = $id";
-            $resPesquisaId = buscaRegistro($sqlPesquisaId);
-            $registro = mysqli_fetch_assoc($resPesquisaId);
-            $ResultFinal[$giros] = $registro;
-        }
-        return $ResultFinal;
+    $tabela2 = $_SESSION[$tabela];
+    for ($i = 0; $i < count($tabela2); $i++) {
+        $ResultFinal[$i][$coluna] = $tabela2[$i][$coluna];
     }
+    return $ResultFinal;
 }
 
 /**
  *  Retorna apenas os dados do id que for expecificado
  */
 function getUserId($id) {
-    if (getQuantLinhasTabela("apostadores") > 0) {
-        $sqlPesquisaId = "SELECT * FROM apostadores WHERE id = $id";
-        $resPesquisaId = buscaRegistro($sqlPesquisaId);
-        $registro = mysqli_fetch_assoc($resPesquisaId);
-        $ResultFinal[0] = $registro;
 
+    $tabela2 = $_SESSION["apostadores"];
+    if (getQuantLinhasTabela("apostadores") > 0) {
+        for ($i = 0; $i < count($tabela2); $i++) {
+            if ($tabela2[$i]['id'] == $id) {
+                $ResultFinal[0] = $tabela2[$i];
+            }
+        }
         return $ResultFinal;
     }
 }
@@ -184,13 +209,17 @@ function setDadosDoUsuario($nome, $time, $primeiro, $segundo, $terceiro, $quarto
  * Cadastra os jogadores e qual gupos estão
  */
 function setJogador($nome, $grupo) {
-    print $nome . $grupo;
     $sql = "INSERT INTO jogadores (nome,grupo) VALUES ('$nome','$grupo')";
     if (inserir($sql)) {
         print "<script>alert(' enviado com Sucesso!');</script>";
     } else {
         print "<script>alert('Falha no envio!');</script>";
     }
+}
+
+function apagaPorNome($nome, $tabela) {
+    $sql = "DELETE FROM $tabela WHERE $tabela.nome = '$nome'";
+    excluir($sql);
 }
 
 /**
@@ -213,55 +242,77 @@ function getApostas($id) {
  * Inserir os pontos dos apostadores quando for chamada
  */
 function setPontuacaoDB($id, $pontos) {
-    $sql = "UPDATE apostadores SET pontos = '$pontos' WHERE id = " . $id . "";
-    atualizarRegistro($sql);
+    $apostadores = $_SESSION['apostadores'];
+    for ($i = 0; $i < count($apostadores); $i++) {
+        if ($apostadores[$i]['id'] == $id) {
+            $apostadores[$i]['pontos'] = $pontos;
+        }
+    }
+    $_SESSION['apostadores'] = $apostadores;
+    //$sql = "UPDATE apostadores SET pontos = '$pontos' WHERE id = " . $id . "";
+    //atualizarRegistro($sql);
 }
 
 /**
  * Inserir o capitão dos apostadores quando for chamada
  */
 function setCapitao($nome, $id) {
-    $apostador = getInfoLinha("apostadores", $id);
-    if ($apostador["capitao"] == "") {
-        $sql = "UPDATE apostadores SET capitao = '$nome' WHERE id = " . $id . "";
-    } else {
-        $sql = "UPDATE apostadores SET capitao2 = '$nome' WHERE id = " . $id . "";
+    $tabela2 = $_SESSION["apostadores"];
+    for ($i = 0; $i < count($tabela2); $i++) {
+        if ($tabela2[$i]['id'] == $id) {
+            if ($tabela2[$i]['capitao'] == "") {
+                $tabela2[$i]['capitao'] = $nome;
+            } else {
+                $tabela2[$i]['capitao2'] = $nome;
+            }
+        }
     }
-    atualizarRegistro($sql);
+    $_SESSION["apostadores"] = $tabela2;
 }
 
 /**
  * apaga o capitão dos apostadores para enserir um novo
  */
 function nullCapitao($id) {
-
-    $sql = $sql = "UPDATE apostadores SET capitao = '' WHERE id = " . $id . "";
-    excluir($sql);
-
-    $sql = $sql = "UPDATE apostadores SET capitao2 = '' WHERE id = " . $id . "";
-    excluir($sql);
+    $tabela2 = $_SESSION["apostadores"];
+    for ($i = 0; $i < count($tabela2); $i++) {
+        if ($tabela2[$i]['id'] == $id) {
+            print $tabela2[$i]['capitao'] = "";
+            print $tabela2[$i]['capitao2'] = "";
+        }
+    }
+    $_SESSION["apostadores"] = $tabela2;
 }
 
 /**
  * apaga o capitão dos apostadores para enserir um novo
  */
 function nullCapitao2($id, $nome) {
-    $apostador = getInfoLinha("apostadores", $id);
-    if ($apostador["capitao"] == $nome) {
-        $sql = $sql = "UPDATE apostadores SET capitao = '' WHERE id = " . $id . "";
+    $tabela2 = $_SESSION["apostadores"];
+    for ($i = 0; $i < count($tabela2); $i++) {
+        if ($tabela2[$i]['id'] == $id) {
+            if ($tabela2[$i]['capitao'] == $nome) {
+                print $tabela2[$i]['capitao'] = "";
+            }
+            if ($tabela2[$i]['capitao2'] == $nome) {
+                print $tabela2[$i]['capitao2'] = "";
+            }
+        }
     }
-    if ($apostador["capitao2"] == $nome) {
-        $sql = $sql = "UPDATE apostadores SET capitao2 = '' WHERE id = " . $id . "";
-    }
-    excluir($sql);
+    $_SESSION["apostadores"] = $tabela2;
 }
 
 /**
  * Zera os pontos dos usuarios 
  */
 function zerarPontos() {
-    $sql = "UPDATE apostadores SET pontos = 0";
-    atualizarRegistro($sql);
+    $apostadores = $_SESSION['apostadores'];
+    for ($i = 0; $i < count($apostadores); $i++) {
+        $apostadores[$i]['pontos'] = 0;
+    }
+    $_SESSION['apostadores'] = $apostadores;
+    //$sql = "UPDATE apostadores SET pontos = 0";
+    //atualizarRegistro($sql);
 }
 
 /**
@@ -289,23 +340,46 @@ function apagaDados($nome) {
  */
 
 /**
-     *  Faz os calculos dos pontos de cada apostador e cadastra
-     * 
-     *  Zerar os dados servirá para não haver acúmulos de pontuação.
-     * 
-     *  O primeiro FOR rodará a quantidade de apostadores que há na tabela do banco.
-     * 
-     *  O segundo FOR  rodará apenas para identificar os jogadores que foram escolhido pelo apostador chamando uma função 
-     *  para saber quantos gols aquele jogador fez.
-     * 
-     *  A condição e para identificar os capitães  que o apostador fez.
-     * 
-     *  A segunda condição servira para saber se já terminou a copa, há uma segunda condição que ira identificar o 
-     *  nome que o apostador escolheu se a copa estiver terminada.
-     * 
-     *  Finalizando as condições da pontuação serão atualizados os pontos do apostador segundo o id dele. 
-     */
-function atualizarPontuacao() {zerarPontos();$apostadores = getInfoTabela("apostadores");$id = getId("apostadores");$auntidadeLinhas = getQuantLinhasTabela("apostadores");for ($i = 0; $i < $auntidadeLinhas; $i++) {$getAposta = getApostas($i);for ($a = 0; $a < count($getAposta); $a++) {$aposta = $getAposta[$a];$apostadores[$i]["pontos"] = $apostadores[$i]["pontos"] + 10 * getGols($aposta);if (($aposta == $apostadores[$i]["capitao"]) || ($aposta == $apostadores[$i]["capitao2"])) {$apostadores[$i]["pontos"] = $apostadores[$i]["pontos"] + 10 * getGols($aposta);}}if (campeao()) {$timeEscolhido = getColExpecifica("time", "apostadores");$campeao = getColExpecifica("nome", "campeaoc");if ($campeao[0]["nome"] == $timeEscolhido[$i]["time"]) {$apostadores[$i]["pontos"] = $apostadores[$i]["pontos"] + 100;}}setPontuacaoDB($id[$i], $apostadores[$i]["pontos"]);}}
+ *  Faz os calculos dos pontos de cada apostador e cadastra
+ * 
+ *  Zerar os dados servirá para não haver acúmulos de pontuação.
+ * 
+ *  O primeiro FOR rodará a quantidade de apostadores que há na tabela do banco.
+ * 
+ *  O segundo FOR  rodará apenas para identificar os jogadores que foram escolhido pelo apostador chamando uma função 
+ *  para saber quantos gols aquele jogador fez.
+ * 
+ *  A condição e para identificar os capitães  que o apostador fez.
+ * 
+ *  A segunda condição servira para saber se já terminou a copa, há uma segunda condição que ira identificar o 
+ *  nome que o apostador escolheu se a copa estiver terminada.
+ * 
+ *  Finalizando as condições da pontuação serão atualizados os pontos do apostador segundo o id dele. 
+ */
+function atualizarPontuacao() {
+    zerarPontos();
+    $apostadores = getInfoTabela("apostadores");
+    $id = getId("apostadores");
+    $auntidadeLinhas = getQuantLinhasTabela("apostadores");
+    for ($i = 0; $i < $auntidadeLinhas; $i++) {
+        $getAposta = getApostas($i);
+        for ($a = 0; $a < count($getAposta); $a++) {
+            $aposta = $getAposta[$a];
+            $apostadores[$i]["pontos"] = $apostadores[$i]["pontos"] + 10 * getGols($aposta);
+            if (($aposta == $apostadores[$i]["capitao"]) || ($aposta == $apostadores[$i]["capitao2"])) {
+                $apostadores[$i]["pontos"] = $apostadores[$i]["pontos"] + 10 * getGols($aposta);
+            }
+        }
+        if (campeao()) {
+            $timeEscolhido = getColExpecifica("time", "apostadores");
+            $campeao = getColExpecifica("nome", "campeaoc");
+            if ($campeao[0]["nome"] == $timeEscolhido[$i]["time"]) {
+                $apostadores[$i]["pontos"] = $apostadores[$i]["pontos"] + 100;
+            }
+        }
+        setPontuacaoDB($id[$i], $apostadores[$i]["pontos"]);
+    }
+}
 
 /**
  * Retorna a quantidade de Gols de um jogador
@@ -376,7 +450,6 @@ function getOrdenaJogadorPorGols() {
     return $jogadores;
 }
 
-
 /**
  * Retorna os nomes das colunas das tabelas
  */
@@ -396,9 +469,10 @@ function getFieldColuna($tabela) {
  * Retorna a quantidade das colunas das tabelas
  */
 function getQuantColunas($tabela) {
-    $sqlPesquisaId = "SHOW COLUMNS FROM " . $tabela . "";
-    $resPesquisaId = buscaRegistro($sqlPesquisaId);
-    return mysqli_num_rows($resPesquisaId);
+    $tabela2 = $_SESSION[$tabela];
+    for ($i = 0; $i < 1; $i++) {
+        return count($tabela2[$i]);
+    }
 }
 
 /**
@@ -406,15 +480,16 @@ function getQuantColunas($tabela) {
  * que será feito acaso a API não funcionar a soma de gols
  */
 function setAlmentaGols($id) {
+    $tabela2 = $_SESSION["jogadores"];
     $jogadores = getInfoTabela("jogadores");
     for ($i = 0; $i < getQuantLinhasTabela("jogadores"); $i++) {
         if ($jogadores[$i]["id"] == $id) {
             $gols = $jogadores[$i]["gols"];
             $gols = $gols + 1;
+            $tabela2[$i]["gols"] = $gols;
         }
     }
-    $sql = "UPDATE jogadores SET gols = '$gols' WHERE id = " . $id . "";
-    atualizarRegistro($sql);
+    $_SESSION["jogadores"] = $tabela2;
 }
 
 /**
@@ -422,13 +497,26 @@ function setAlmentaGols($id) {
  * que será feito acaso a API não funcionar a soma de gols
  */
 function setDiminuirGols($id) {
+    $tabela2 = $_SESSION["jogadores"];
     $jogadores = getInfoTabela("jogadores");
     for ($i = 0; $i < getQuantLinhasTabela("jogadores"); $i++) {
         if ($jogadores[$i]["id"] == $id) {
             $gols = $jogadores[$i]["gols"];
             $gols = $gols - 1;
+            $tabela2[$i]["gols"] = $gols;
         }
     }
-    $sql = "UPDATE jogadores SET gols = '$gols' WHERE id = " . $id . "";
+    $_SESSION["jogadores"] = $tabela2;
+}
+
+function setAtualizarMudancas($coluna, $nome, $id) {
+    $sql = "UPDATE apostadores SET " . $coluna . " = '" . $nome . "' WHERE id =  " . $id . " ";
     atualizarRegistro($sql);
+}
+
+function atualizaJogadores($array) {
+    for ($i = 0; $i < count($array); $i++) {
+        $sql = "UPDATE jogadores SET gols = '" . $array[$i]['gols'] . "' WHERE id =  " . $array[$i]['id'] . " ";
+        atualizarRegistro($sql);
+    }
 }

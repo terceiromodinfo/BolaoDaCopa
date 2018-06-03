@@ -1,8 +1,9 @@
 <?php
 session_start();
-if (isset($_SESSION['login']) && isset($_SESSION['senha'])) {
+include './FuncoesBDL.php';
+if (isset($_SESSION['login']) && isset($_SESSION['senha']) & getColExpecifica("edicao", "admin")[0]["edicao"] == 1) {
 ?>
-<?php include './FuncoesBDL.php';?>
+
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -45,10 +46,16 @@ and open the template in the editor.
                             <a class="" href="Configuracoes.php">Configurações</a>
 
                         </li>
+                        <?php
+                            if (getColExpecifica("edicao", "admin")[0]["edicao"] == 1) {
+                        ?>
                         <li>
                             <a class="" href="Gols.php">Iserir gols</a>
 
                         </li>
+                        <?php
+                            }
+                        ?>
                         <li>
                             <a class="" href="Sair.php">Sair</a>
                         </li>
@@ -102,6 +109,20 @@ and open the template in the editor.
                     </table>
                 </div>
                 <div class="col-md-3"></div>
+                <?php
+                if (getColExpecifica("edicao", "admin")[0]["edicao"] == 1) {
+                ?>
+                <div class="col-md-12">
+                    <div class="col-md-5"></div>
+                    <div class="col-md-2">
+                        <a class="btn butao2" href="Salvar.php?salvarDadosJogador">Salvar</a>                    
+                    </div>
+                    <div class="col-md-5"></div>
+                    <br>
+                </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
 

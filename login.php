@@ -1,3 +1,11 @@
+<?php
+include './FuncoesBDL.php';
+$get = get();
+session_start();
+if (isset($get['abrirDados'])) {
+    abrirDados();
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>

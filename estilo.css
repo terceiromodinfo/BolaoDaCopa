@@ -8,12 +8,7 @@ and open the template in the editor.
     Author     : Lucas
 */
 .fundo1{
-    background: url(img/campo.jpg)fixed no-repeat;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-position: center; 
+    background:#1b6d85
 }
 .fundo2{
     background: white;
@@ -22,12 +17,7 @@ and open the template in the editor.
     background: #286090
 }
 .fundo3{
-    background: url(img/campo3.jpg)fixed no-repeat;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-position: center; 
+    background:#245269
 }
 body{ 
    

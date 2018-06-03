@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,16 +38,20 @@
                     <div class="col-md-6">
                         <div class="col-md-5 thumbnail">
                             <div class="form-login">
-                                <a class="btn btn-default letraswhite" href="login.php">Logar como admistrador</a>
+                                <a class="btn btn-default letraswhite" href="login.php?abrirDados=sim">Logar como admistrador</a>
                             </div>
                         </div>
                        <div class="col-md-2"></div>
+                      
                         <div class="col-md-5 thumbnail">
                             <div class="form-login">
-                                <a class="btn btn-default letraswhite" href="homer.php">Logar como apostador</a>
+                                <a class="btn btn-default letraswhite" href="homer.php?abrirDados=sim">Logar como apostador</a>
                             </div>
+                            
                         </div>
+                       
                     </div>
+                    
                 <div class="col-md-3"></div>
                 
             </div>

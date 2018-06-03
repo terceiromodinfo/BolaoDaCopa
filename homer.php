@@ -1,7 +1,10 @@
 <?php
 include './FuncoesBDL.php';
-getConnection();
+$get = get();
 session_start();
+if (isset($get['abrirDados'])) {
+    abrirDados();
+}
 ?>
 <!DOCTYPE html>
 <!--
@@ -48,10 +51,16 @@ and open the template in the editor.
                         <li>
                             <a class="" href="Configuracoes.php">Configurações</a>
                         </li>
+                        <?php
+                            if (getColExpecifica("edicao", "admin")[0]["edicao"] == 1) {
+                        ?>
                         <li>
                             <a class="" href="Gols.php">Iserir gols</a>
 
                         </li>
+                        <?php
+                            }
+                        ?>
                         <?php
                             }
                         ?>

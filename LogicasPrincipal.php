@@ -64,6 +64,7 @@ if (isset($post['cadastraDadosUsuarios'])) {
     $deSexto = $post["deSexto"];
 
     setDadosDoUsuario($nome, $time, $primeiro, $segundo, $terceiro, $quarto, $quinto, $sexto, $setimo, $oitavo, $nono, $decimo, $dePrimeiro, $deSegundo, $deTerceiro, $deQuarto, $deQuinto, $deSexto);
+    $_SESSION['apostadores'] = getInfoTabelaAbrir("apostadores");
     unset($post);
     header("location:Cadastra.php");
 }
@@ -97,7 +98,7 @@ if (isset($post['atualizarPontuacao2'])) {
 if (isset($post['apagarApostadores'])) {
 
     apagaDados("apostadores");
-
+    $_SESSION['apostadores'] = getInfoTabelaAbrir("apostadores");
     unset($post);
     header("location:Configuracoes.php");
 }
@@ -109,13 +110,13 @@ if (isset($post['apagarApostadores'])) {
 if (isset($post['apagarJogadores'])) {
 
     apagaDados("jogadores");
-
+    $_SESSION['jogadores'] = getInfoTabelaAbrir("jogadores");
     unset($post);
     header("location:Configuracoes.php");
 }
 
 /*
- * Apaga todos os dados dos jogadores
+ * Cadastrar jogador
  */
 
 if (isset($post['cadastraJogador'])) {
@@ -124,7 +125,7 @@ if (isset($post['cadastraJogador'])) {
     $grupo = $post['nomeGrupo'];
 
     setJogador($nome, $grupo);
-
+    $_SESSION['jogadores'] = getInfoTabelaAbrir("jogadores");
     unset($post);
     header("location:Cadastra.php");
 }
@@ -134,10 +135,10 @@ if (isset($post['cadastraJogador'])) {
  */
 
 if (isset($post['ApagaJogadorExpecifico'])) {
-
     $nome = $post ['apagaJogadorExpecifico'];
     $sql = "DELETE FROM jogadores WHERE jogadores.nome = '$nome'";
     excluir($sql);
+    $_SESSION['jogadores'] = getInfoTabelaAbrir("jogadores");
     unset($post);
     header("location:Configuracoes.php");
 }
@@ -153,19 +154,19 @@ if (isset($post['ApagaApostadorExpecifico'])) {
 
     print $nome;
     excluir($sql);
-
+    $_SESSION['apostadores'] = getInfoTabelaAbrir("apostadores");
     unset($post);
     header("location:Configuracoes.php");
 }
 
 if (isset($post['liberar'])) {
+    $tabela2 = $_SESSION["admin"]; 
     if (getColExpecifica("edicao", "admin")[0]["edicao"] == 1) {
-        $sql = "UPDATE admin SET edicao = '0'";
+        $tabela2[0]["edicao"] = 0;
     } else {
-        $sql = "UPDATE admin SET edicao = '1'";
+        $tabela2[0]["edicao"] = 1;
     }
-    atualizarRegistro($sql);
-
+    $_SESSION["admin"] = $tabela2;
     unset($post);
     header("location:Configuracoes.php");
 }
@@ -178,9 +179,17 @@ if (isset($post['cadastraJogadorEmEscalacao'])) {
 
     $nome = $post['nomeJogador'];
     $grupo = $post['nomeGrupo'];
-
-    setJogador($nome, $grupo);
-
+    $tabela2 = $_SESSION["jogadores"];  
+    
+    $novoid = $tabela2[count($tabela2)-1]['id']+1;
+    
+    $tabela2[count($tabela2)]['id'] = $novoid;
+    $tabela2[count($tabela2)-1]['nome'] = $nome;
+    $tabela2[count($tabela2)-1]['gols'] = 0;
+    $tabela2[count($tabela2)-1]['grupo'] = $grupo;
+    $_SESSION["jogadores"] = $tabela2;
+    print_r($_SESSION["jogadores"]);
+    //setJogador($nome, $grupo);
     unset($post);
     header("location:EscalarNovo.php");
 }
@@ -203,12 +212,13 @@ if (isset($post['sim'])) {
     } else {
         print "<script>alert('Falha em atualizado!');</script>";
     }
+    $_SESSION['campeaoc'] = getInfoTabelaAbrir("campeaoc");
     unset($post);
     header("location:Configuracoes.php");
 }
 
 /*
- * Afirma que a copa do mundo ja terminou
+ * Afirma que a copa do mundo não terminou
  */
 
 if (isset($post['nao'])) {
@@ -223,7 +233,7 @@ if (isset($post['nao'])) {
     } else {
         print "<script>alert('Falha em atualizado!');</script>";
     }
-
+    $_SESSION['campeaoc'] = getInfoTabelaAbrir("campeaoc");
     unset($post);
     header("location:Configuracoes.php");
 }
@@ -245,6 +255,7 @@ if (isset($post['cadastraTime'])) {
     } else {
         print "<script>alert('Falha em atualizado!');</script>";
     }
+    $_SESSION['campeaoc'] = getInfoTabelaAbrir("campeaoc");
     unset($post);
     header("location:Configuracoes.php");
 }
@@ -277,9 +288,9 @@ if (isset($get['nomeCapitao'])) {
 
 if (isset($get['mudarGrupo'])) {
     $grupo = $get['mudarGrupo'];
-    
-    $sql = "UPDATE `admin` SET `grupo` = '".$grupo."' WHERE `admin`.`id` = 1;";
-    atualizarRegistro($sql);
+    $tabela2 = $_SESSION["admin"]; 
+    $tabela2[0]['grupo'] = $grupo;
+    $_SESSION["admin"] = $tabela2;
     unset($get);
     header("location:Gols.php");
 }
@@ -294,12 +305,15 @@ if (isset($get['liberarJogador'])) {
     $nome = getInfoLinha("apostadores", $id)[$nomeColuna];
     $nomeCapitao = getInfoLinha("apostadores", $id);
     if (($nome == $nomeCapitao['capitao']) || ($nome == $nomeCapitao['capitao2'])) {
-        nullCapitao2($id, $nome);
-       
+        nullCapitao2($id, $nome);       
+    }    
+    $tabela2 = $_SESSION["apostadores"];    
+    for ($i = 0; $i < count($tabela2); $i++) {
+        if ($tabela2[$i]['id'] == $id) {            
+                $tabela2[$i][$nomeColuna] = "";              
+        }
     }
-
-    $sql = "UPDATE apostadores SET " . $nomeColuna . " = '' WHERE id =  " . $id . " ";
-    atualizarRegistro($sql);
+    $_SESSION["apostadores"] = $tabela2;
     unset($get);
     header("location:Apostador.php");
 }
@@ -310,9 +324,13 @@ if (isset($get['liberarJogador'])) {
 
 if (isset($get['trocarTime'])) {
     $id = $_SESSION['id'];
-    $sql = "UPDATE apostadores SET time = '' WHERE id =  " . $id . "";
-    
-    atualizarRegistro($sql);
+    $tabela2 = $_SESSION["apostadores"];    
+    for ($i = 0; $i < count($tabela2); $i++) {
+        if ($tabela2[$i]['id'] == $id) {            
+                $tabela2[$i]["time"] = "";              
+        }
+    }
+    $_SESSION["apostadores"] = $tabela2;
     unset($get);
     header("location:Apostador.php");
 }
@@ -325,8 +343,13 @@ if (isset($post['escolherNovoTime'])) {
     $id = $_SESSION['id'];
     $nome = $post['novoTime'];
     
-    $sql = "UPDATE apostadores SET time = '".$nome."' WHERE id =  " . $id . "";
-    atualizarRegistro($sql);
+    $tabela2 = $_SESSION["apostadores"];    
+    for ($i = 0; $i < count($tabela2); $i++) {
+        if ($tabela2[$i]['id'] == $id) {            
+                $tabela2[$i]["time"] = $nome;              
+        }
+    }
+    $_SESSION["apostadores"] = $tabela2;
     unset($get);
     header("location:Apostador.php");
 }
@@ -335,9 +358,14 @@ if (isset($get['novoJogador'])) {
     $nome = $get['novoJogador'];
     $id = $_SESSION['id'];
     $nomeColuna = $_SESSION['coluna'];
-
-    $sql = "UPDATE apostadores SET " . $nomeColuna . " = '" . $nome . "' WHERE id =  " . $id . " ";
-    atualizarRegistro($sql);
+    
+    $tabela2 = $_SESSION["apostadores"];    
+    for ($i = 0; $i < count($tabela2); $i++) {
+        if ($tabela2[$i]['id'] == $id) {            
+                $tabela2[$i][$nomeColuna] = $nome;              
+        }
+    }
+    $_SESSION["apostadores"] = $tabela2;
     unset($get);
     header("location:Apostador.php");
 }
