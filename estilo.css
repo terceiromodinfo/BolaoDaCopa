@@ -84,6 +84,15 @@ a:link{
     display: inline-block;
     font-family: Cooper Black
 }
+.butaoVerde2{ 
+    border-style: none; 
+    color: white;
+    background: green; 
+    padding: 6px; 
+    font-weight: bold;
+    display: inline-block;
+    font-family: Cooper Black
+}
 .butaoVermelho2{ 
     color: white;
     background: orangered; 

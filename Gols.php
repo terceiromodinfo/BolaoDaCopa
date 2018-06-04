@@ -71,14 +71,14 @@ and open the template in the editor.
                 <div class="col-md-12">
                     <div class="col-md-4"></div>
                     <div class="col-md-4">
-                        <a class="btn btn-success" href="LogicasPrincipal.php?mudarGrupo=A">A</a>
-                        <a class="btn btn-success" href="LogicasPrincipal.php?mudarGrupo=B">B</a>
-                        <a class="btn btn-success" href="LogicasPrincipal.php?mudarGrupo=C">C</a>
-                        <a class="btn btn-success" href="LogicasPrincipal.php?mudarGrupo=D">D</a>
-                        <a class="btn btn-success" href="LogicasPrincipal.php?mudarGrupo=E">E</a>
-                        <a class="btn btn-success" href="LogicasPrincipal.php?mudarGrupo=F">F</a>
-                        <a class="btn btn-success" href="LogicasPrincipal.php?mudarGrupo=G">G</a>
-                        <a class="btn btn-success" href="LogicasPrincipal.php?mudarGrupo=H">H</a>
+                        <a class="btn butaoVerde2" href="LogicasPrincipal.php?mudarGrupo=A">A</a>
+                        <a class="btn butaoVerde2" href="LogicasPrincipal.php?mudarGrupo=B">B</a>
+                        <a class="btn butaoVerde2" href="LogicasPrincipal.php?mudarGrupo=C">C</a>
+                        <a class="btn butaoVerde2" href="LogicasPrincipal.php?mudarGrupo=D">D</a>
+                        <a class="btn butaoVerde2" href="LogicasPrincipal.php?mudarGrupo=E">E</a>
+                        <a class="btn butaoVerde2" href="LogicasPrincipal.php?mudarGrupo=F">F</a>
+                        <a class="btn butaoVerde2" href="LogicasPrincipal.php?mudarGrupo=G">G</a>
+                        <a class="btn butaoVerde2" href="LogicasPrincipal.php?mudarGrupo=H">H</a>
 
                     </div>
                     <div class="col-md-4"></div>
