@@ -125,6 +125,8 @@ $pizza = "piece1|piece2|piece3|piece4|piece5|piece6";
 
     return $conn;
 } 
+ * ALTER TABLE tabela_exemplo CHANGE id_exemplo novo_id_exemplo integer(5) unsigned;
+
  * 
  * 
  * 

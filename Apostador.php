@@ -131,8 +131,7 @@ and open the template in the editor.
                             for ($i = 0; $i < getQuantColunas("apostadores"); $i++) {
                                 //Condição para que não seja exibido o id nem o capitão no frontyend
                                 if (!(($colunas[$i] == "pontos") || ($colunas[$i] == "nome") || ($colunas[$i] == "id") || ($colunas[$i] == "capitao") || ($colunas[$i] == "capitao2") || ($colunas[$i] == ""))) {
-                                    print "<tr>";
-                                    print "<td>".$colunas[$i]."</td>";
+                                    print "<tr>";              
                                     /*
                                      * Condição para que seja exibido os nomes dos jogadores amarelo e com bolinhas 
                                      * caso contrario sera apenas exibidos apenas os nomes dos jogadores
