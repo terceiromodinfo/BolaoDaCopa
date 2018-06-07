@@ -47,16 +47,9 @@ and open the template in the editor.
                             <a class="" href="Configuracoes.php">Configurações</a>
 
                         </li>
-                        <?php
-                            if (getColExpecifica("edicao", "admin")[0]["edicao"] == 1) {
-                        ?>
                         <li>
                             <a class="" href="Gols.php">Iserir gols</a>
-
-                        </li>
-                        <?php
-                            }
-                        ?>
+                        </li> 
                         <li>
                             <a class="" href="Sair.php">Sair</a>
                         </li>
@@ -286,7 +279,30 @@ and open the template in the editor.
                                         }
                                     }
                                     ?>
-                                </select><br><br>
+                                </select>
+                                <h5>1° Capitão</h5>
+                                <select name="capitao1" class="form-control">
+                                    <option></option>
+                                    <?php
+                                    for ($i = 0; $i < $NumerosDeLinhas; $i++) {
+                                        
+                                            print $a = "<option>" . $dados[$i]['nome'] . "</option>";
+                                        
+                                    }
+                                    ?>
+                                </select><br>
+                                <h5>2° Capitão</h5>
+                                <select name="capitao2" class="form-control">
+                                    <option></option>
+                                    <?php
+                                    for ($i = 0; $i < $NumerosDeLinhas; $i++) {
+                                       
+                                            print $a = "<option>" . $dados[$i]['nome'] . "</option>";
+                                        
+                                    }
+                                    ?>
+                                </select><br>
+                                <br>
 
                                 <div class="col-md-5"></div>
                                 <div class="col-md-2">

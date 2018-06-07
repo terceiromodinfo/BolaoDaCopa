@@ -47,16 +47,9 @@ and open the template in the editor.
                             <a class="" href="Configuracoes.php">Configurações</a>
 
                         </li>
-                        <?php
-                            if (getColExpecifica("edicao", "admin")[0]["edicao"] == 1) {
-                        ?>
                         <li>
                             <a class="" href="Gols.php">Iserir gols</a>
-
-                        </li>
-                        <?php
-                            }
-                        ?>
+                        </li> 
                         <li>
                             <a class="" href="Sair.php">Sair</a>
                         </li>
@@ -112,14 +105,27 @@ and open the template in the editor.
                                     <?php
                                     if (getColExpecifica("edicao", "admin")[0]["edicao"]) {
                                         print "<h6></h6>";
-                                        print "<input class='butao' type='submit' name='liberar' value='Fechar edição'/>";                                    
+                                        print "<input class='butao' type='submit' name='liberar' value='Fechar edição para admin'/>";                                    
                                     } else {
                                         print "<h6></h6>";
-                                        print "<input class='butao' type='submit' name='liberar' value='Abrir edição'/>";
+                                        print "<input class='butao' type='submit' name='liberar' value='Abrir edição para admin'/>";
                                     }
                                     ?>
                                 </form>
-
+                                
+                                <form method='POST' action='LogicasPrincipal.php'>
+                                    <?php
+                                    if (getColExpecificaAbrir("edicao", "admin")["edicao"] == 1) {
+                                        print "<h6></h6>";
+                                        print "<input class='butao' type='submit' name='liberarParaTodos' value='Fechar edição para todos'/>";                                    
+                                    } else {
+                                        print "<h6></h6>";
+                                        print "<input class='butao' type='submit' name='liberarParaTodos' value='Abrir edição para todos'/>";
+                                    }                                   
+                                    ?>
+                                </form>
+                                <h4>informações de jogadores sem uso</h4>
+                                <a class="btn butao" href="jogadoresSemfuncao.php">Obter</a>
                             </div>
                             <div class="col-md-6 thumbnail">
 
@@ -157,7 +163,7 @@ and open the template in the editor.
                                     <input class="butao" name="ApagaApostadorExpecifico" type="submit" value="Apagar"/>
                                 </form>
                             </div>
-                            <div class="col-md-6 thumbnail">
+                            <div class="col-md-6 thumbnail">                                
                                 <h4>Apagar todos apostador</h4>
                                 <form class="form-group" method="POST" action="LogicasPrincipal.php">
                                     <input  class="btn butao" type="submit" name="apagarApostadores" value="Apagar"/>

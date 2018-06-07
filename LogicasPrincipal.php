@@ -62,12 +62,16 @@ if (isset($post['cadastraDadosUsuarios'])) {
     $deQuarto = $post["deQuarto"];
     $deQuinto = $post["deQuinto"];
     $deSexto = $post["deSexto"];
+    $capitao1 = $post["capitao1"];
+    $capitao2 = $post["capitao2"];
+    
 
-    setDadosDoUsuario($nome, $time, $primeiro, $segundo, $terceiro, $quarto, $quinto, $sexto, $setimo, $oitavo, $nono, $decimo, $dePrimeiro, $deSegundo, $deTerceiro, $deQuarto, $deQuinto, $deSexto);
+    setDadosDoUsuario($nome, $time, $primeiro, $segundo, $terceiro, $quarto, $quinto, $sexto, $setimo, $oitavo, $nono, $decimo, $dePrimeiro, $deSegundo, $deTerceiro, $deQuarto, $deQuinto, $deSexto, $capitao1, $capitao2);
     $_SESSION['apostadores'] = getInfoTabelaAbrir("apostadores");
     unset($post);
     header("location:Cadastra.php");
 }
+
 
 /*
  * Atualizar os pontos dos apostadores
@@ -78,17 +82,6 @@ if (isset($post['atualizarPontuacao'])) {
     atualizarPontuacao();
     unset($post);
     header("location:homer.php");
-}
-
-/*
- * Atualizar os pontos dos apostadores
- */
-
-if (isset($post['atualizarPontuacao2'])) {
-    
-    atualizarPontuacao();
-    unset($post);
-    header("location:Apostador.php");
 }
 
 /*
@@ -159,6 +152,10 @@ if (isset($post['ApagaApostadorExpecifico'])) {
     header("location:Configuracoes.php");
 }
 
+
+/*
+ * Libera a edição somente para o administrador
+ */
 if (isset($post['liberar'])) {
     $tabela2 = $_SESSION["admin"]; 
     if (getColExpecifica("edicao", "admin")[0]["edicao"] == 1) {
@@ -167,6 +164,22 @@ if (isset($post['liberar'])) {
         $tabela2[0]["edicao"] = 1;
     }
     $_SESSION["admin"] = $tabela2;
+    unset($post);
+    header("location:Configuracoes.php");
+}
+
+/*
+ * Libera a edição para todos
+ */
+if (isset($post['liberarParaTodos'])) {
+    if (getColExpecificaAbrir("edicao", "admin")["edicao"] == 1) {
+        $sql = "UPDATE admin SET edicao = 0";
+    } else {
+        $sql = "UPDATE admin SET edicao = 1";
+    }
+    atualizarRegistro($sql);
+    $_SESSION['admin'] = getInfoTabelaAbrir("admin");
+    print_r(getColExpecificaAbrir("edicao", "admin")["edicao"]);
     unset($post);
     header("location:Configuracoes.php");
 }
@@ -271,6 +284,21 @@ if (isset($get['dezfaserCapitao'])) {
     
     unset($get);
     header("location:Apostador.php");
+}
+
+/*
+ *  Apagar jogadores inutil
+ */
+
+if (isset($get['ApagarJogadoresInutil'])) {
+    $jogadores = $_SESSION['jogadoresSaoInutil'];
+    
+    for ($i = 0; $i < count($jogadores); $i++) {
+        apagaPorNome($jogadores[$i]['nome'], "jogadores");
+    }
+    $_SESSION['jogadores'] = getInfoTabelaAbrir("jogadores");
+    unset($get);
+    header("location:Configuracoes.php");
 }
 
 /*

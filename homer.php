@@ -4,7 +4,12 @@ $get = get();
 session_start();
 if (isset($get['abrirDados'])) {
     abrirDados();
+    unset($get);
 }
+/*
+ * Atualizar dados da session
+ */
+
 ?>
 <!DOCTYPE html>
 <!--
@@ -38,6 +43,11 @@ and open the template in the editor.
                 <div class="collapse navbar-collapse menu-navegacao" id="menu-navegacao">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#pageTop"></a></li>
+                        
+                        <li>
+                            <a class="glyphicon-ban-circle" href="?abrirDados"></a>
+                        </li>
+                        
                         <li>
                             <a class="" href="homer.php">Pagina Inicial</a>
                         </li>
@@ -51,16 +61,10 @@ and open the template in the editor.
                         <li>
                             <a class="" href="Configuracoes.php">Configurações</a>
                         </li>
-                        <?php
-                            if (getColExpecifica("edicao", "admin")[0]["edicao"] == 1) {
-                        ?>
                         <li>
-                            <a class="" href="Gols.php">Iserir gols</a>
+                                <a class="" href="Gols.php">Iserir gols</a>
 
-                        </li>
-                        <?php
-                            }
-                        ?>
+                        </li> 
                         <?php
                             }
                         ?>
@@ -95,7 +99,7 @@ and open the template in the editor.
                             <table class="tabelas table table-hover">
                                 <tr> 
                                     <th class="letrasBolds">#</th>
-                                    <th class="letrasBolds">Nomes</th>
+                                    <th class="letrasBolds">Competidores</th>
                                     <th class="letrasBolds">Pontos</th>
                                 </tr>
 

@@ -82,6 +82,13 @@ function getQuantLinhasTabelaAbrir($tabela) {
     return mysqli_num_rows($consulta);
 }
 
+function getColExpecificaAbrir($coluna, $tabela) {
+    $sql = "SELECT ".$coluna." FROM " . $tabela . "";
+    $resPesquisaId = buscaRegistro($sql);
+    $registro = mysqli_fetch_assoc($resPesquisaId);
+    return $registro;
+}
+
 function getIdAbrir($tabela) {
 
         $sqlId = "SELECT id FROM " . $tabela . "";
@@ -194,9 +201,9 @@ function getUserId($id) {
 /**
  * Cadastra todos os dados dos usuario ou apostadores
  */
-function setDadosDoUsuario($nome, $time, $primeiro, $segundo, $terceiro, $quarto, $quinto, $sexto, $setimo, $oitavo, $nono, $decimo, $dePrimeiro, $deSegundo, $deTerceiro, $deQuarto, $deQuinto, $deSexto) {
-    $sql = "INSERT INTO apostadores (nome,time,joUm,joDois,joTres,joQuatro,joCinco,joSeis,joSetimo,joOitavo,joNono,joDecimo,joDePrimeiro,joDeSegundo,joDeTerceiro,joDeQuarto,joDeQuinto,joDeSexto)"
-            . " VALUES ('$nome','$time','$primeiro','$segundo','$terceiro','$quarto','$quinto','$sexto','$setimo','$oitavo','$nono','$decimo','$dePrimeiro','$deSegundo','$deTerceiro','$deQuarto','$deQuinto','$deSexto')";
+function setDadosDoUsuario($nome, $time, $primeiro, $segundo, $terceiro, $quarto, $quinto, $sexto, $setimo, $oitavo, $nono, $decimo, $dePrimeiro, $deSegundo, $deTerceiro, $deQuarto, $deQuinto, $deSexto, $capitao1, $capitao2) {
+    $sql = "INSERT INTO apostadores (nome,time,joUm,joDois,joTres,joQuatro,joCinco,joSeis,joSetimo,joOitavo,joNono,joDecimo,joDePrimeiro,joDeSegundo,joDeTerceiro,joDeQuarto,joDeQuinto,joDeSexto,capitao,capitao2)"
+            . " VALUES ('$nome','$time','$primeiro','$segundo','$terceiro','$quarto','$quinto','$sexto','$setimo','$oitavo','$nono','$decimo','$dePrimeiro','$deSegundo','$deTerceiro','$deQuarto','$deQuinto','$deSexto','$capitao1','$capitao2')";
     if (inserir($sql)) {
         print "<script>alert(' enviado com Sucesso!');</script>";
     } else {
