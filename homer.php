@@ -4,7 +4,7 @@ $get = get();
 session_start();
 if (isset($get['abrirDados'])) {
     abrirDados();
-    unset($get);
+    unset($get['abrirDados']);
 }
 /*
  * Atualizar dados da session

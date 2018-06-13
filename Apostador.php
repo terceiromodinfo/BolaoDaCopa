@@ -26,11 +26,7 @@ and open the template in the editor.
      * operação for solicitada e retornar aqui não avera nada no get()['id'] então o $_SESSION['id'] = $id;
      * receberar o id para que possa ser usado aqui e em outras operações. 
      */
-    if (getColExpecifica("edicao", "admin")[0]["edicao"] == 1) {
-        if (!(isset($_SESSION['login']) && isset($_SESSION['senha']))) {
-            $_SESSION['admin'] = getInfoTabelaAbrir("admin");
-        }
-    }
+    
 
 if (get()['id']) {
         $id = get()['id'];
@@ -262,9 +258,12 @@ if (get()['id']) {
                     <div class="col-md-3"></div>
                     <?php                    
                     if (getColExpecifica("edicao", "admin")[0]["edicao"] == 1) {
+                        /*
                         if (!(isset($_SESSION['login']) && isset($_SESSION['senha']))) {
                             $_SESSION['admin'] = getInfoTabelaAbrir("admin");
                         }
+                         * 
+                         */
                         ?>
                         <div class="col-md-12">
                             <div class="col-md-5"></div>
