@@ -45,7 +45,7 @@ and open the template in the editor.
                         <li><a href="#pageTop"></a></li>
                         
                         <li>
-                            <a class="glyphicon-ban-circle" href="?abrirDados"></a>
+                            <a class="glyphicon glyphicon-repeat" href="?abrirDados"></a>
                         </li>
                         
                         <li>
