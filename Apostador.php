@@ -120,7 +120,8 @@ if (get()['id']) {
                                  * Será feitas as condições necessárias para que a exibição saia de maneira que os 
                                  * capitães sejam escolhidos 
                                  */
-                                for ($i = 0; $i < getQuantColunas("apostadores"); $i++) {
+                                $quantColunas = getQuantColunas("apostadores");
+                                for ($i = 0; $i < $quantColunas; $i++) {
                                     //Condição para que não seja exibido o id nem o capitão no frontyend
                                     if (!(($colunas[$i] == "pontos") || ($colunas[$i] == "nome") || ($colunas[$i] == "id") || ($colunas[$i] == "capitao") || ($colunas[$i] == "capitao2") || ($colunas[$i] == "time"))) {
                                         print "<tr>";
