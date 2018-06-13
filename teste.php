@@ -74,5 +74,8 @@ $jogadores = getInfoTabela("jogadores");
             
             ?>
         </table>
+        <?php
+            print_r(getGols("A2"));
+        ?>
     </body>
 </html>

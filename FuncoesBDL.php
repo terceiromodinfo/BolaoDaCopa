@@ -361,6 +361,8 @@ function apagaDados($nome) {
  *  nome que o apostador escolheu se a copa estiver terminada.
  * 
  *  Finalizando as condições da pontuação serão atualizados os pontos do apostador segundo o id dele. 
+ * 
+}
  */
 function atualizarPontuacao() {
     zerarPontos();
@@ -391,12 +393,15 @@ function atualizarPontuacao() {
  * Retorna a quantidade de Gols de um jogador
  */
 function getGols($nome) {
-    $sql = "SELECT gols FROM `jogadores` WHERE nome = '$nome'";
+    $jogadores = $_SESSION['jogadores'];
 
-    $resPesquisaId = buscaRegistro($sql);
-    $registro = mysqli_fetch_assoc($resPesquisaId);
-
-    return $registro['gols'];
+    for ($i = 0; $i < count($jogadores); $i++) {  
+        if ($jogadores[$i]["nome"] == $nome) { 
+           $registro = $jogadores[$i]["gols"];
+           break;
+        }      
+    }
+    return $registro;
 }
 
 /**
