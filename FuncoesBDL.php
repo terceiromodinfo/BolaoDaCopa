@@ -465,6 +465,9 @@ function getOrdenaJogadorPorGols() {
  * Retorna os nomes das colunas das tabelas
  */
 function getFieldColuna($tabela) {
+    $tabelas = getInfoTabela($tabela);
+    return array_keys($tabelas[0]);
+    /*
     $sqlPesquisaId = "SHOW COLUMNS FROM " . $tabela . "";
     $resPesquisaId = buscaRegistro($sqlPesquisaId);
     $i = 0;
@@ -473,7 +476,9 @@ function getFieldColuna($tabela) {
         $a[$i] = $row['Field'];
         $i = $i + 1;
     }
-    return $a;
+     */
+    
+    //return $a;
 }
 
 /**
