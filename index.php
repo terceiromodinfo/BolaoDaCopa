@@ -45,7 +45,7 @@
                       
                         <div class="col-md-5 thumbnail">
                             <div class="form-login">
-                                <a class="btn btn-default letraswhite" href="homer.php?abrirDados=sim">Logar como apostador</a>
+                                <a class="btn btn-default letraswhite" href="">Logar como apostador</a>
                             </div>
                             
                         </div>

@@ -394,7 +394,7 @@ function atualizarPontuacao() {
  */
 function getGols($nome) {
     $jogadores = $_SESSION['jogadores'];
-
+    $registro = 0;
     for ($i = 0; $i < count($jogadores); $i++) {  
         if ($jogadores[$i]["nome"] == $nome) { 
            $registro = $jogadores[$i]["gols"];

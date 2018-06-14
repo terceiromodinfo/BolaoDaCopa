@@ -35,11 +35,11 @@ if (isset($get['idDoUseer'])) {
             $grupo = $jogadorModificado[$a]['grupo'];            
             setJogador($nome, $grupo);
         }
+        $_SESSION['jogadores'] = getInfoTabelaAbrir("jogadores");
+        $_SESSION['jogadoresCompare'] = $_SESSION['jogadores'];
     }
-    $_SESSION['jogadores'] = getInfoTabelaAbrir("jogadores");
     $_SESSION['apostadores'] = getInfoTabelaAbrir("apostadores");
     
-    $_SESSION['jogadoresCompare'] = $_SESSION['jogadores'];
     $_SESSION['apostadoresCompare'] = $_SESSION['apostadores'];
     header("location:Apostador.php");
 }

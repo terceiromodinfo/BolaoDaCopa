@@ -5,10 +5,13 @@
         <group>
             <file>file:/C:/xampp/htdocs/BolaoDaCopaTeste/Gols.php</file>
             <file>file:/C:/xampp/htdocs/BolaoDaCopaTeste/LogicasPrincipal.php</file>
-            <file>file:/C:/xampp/htdocs/BolaoDaCopaTeste/Apostador.php</file>
-            <file>file:/C:/xampp/htdocs/BolaoDaCopaTeste/FuncoesBDL.php</file>
             <file>file:/C:/xampp/htdocs/BolaoDaCopaTeste/Cadastra.php</file>
             <file>file:/C:/xampp/htdocs/BolaoDaCopaTeste/EntulhosDeCodigosInutil.php</file>
+            <file>file:/C:/xampp/htdocs/BolaoDaCopaTeste/homer.php</file>
+            <file>file:/C:/xampp/htdocs/BolaoDaCopaTeste/teste.php</file>
+            <file>file:/C:/xampp/htdocs/BolaoDaCopaTeste/Apostador.php</file>
+            <file>file:/C:/xampp/htdocs/BolaoDaCopaTeste/Salvar.php</file>
+            <file>file:/C:/xampp/htdocs/BolaoDaCopaTeste/FuncoesBDL.php</file>
         </group>
     </open-files>
 </project-private>
