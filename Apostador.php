@@ -73,12 +73,13 @@ if (get()['id']) {
                                 <a class="" href="Gols.php">Iserir gols</a>
 
                             </li>                           
-                            <?php
-                        }
-                        ?>
+                            
                         <li>
                             <a class="" href="Sair.php">Sair</a>
                         </li>
+                        <?php
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>
