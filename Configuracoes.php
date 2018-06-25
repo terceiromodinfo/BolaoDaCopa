@@ -38,7 +38,7 @@ and open the template in the editor.
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#pageTop"></a></li>
                         <li>
-                            <a class="" href="homer.php">Pagina Inicial</a>
+                            <a class="" href="index.php">Pagina Inicial</a>
                         </li>
                         <li>
                             <a class="" href="Cadastra.php">Cadastra</a>

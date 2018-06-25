@@ -1,4 +1,5 @@
 <?php
+header("location:index.php");
 include './FuncoesBDL.php';
 $get = get();
 session_start();

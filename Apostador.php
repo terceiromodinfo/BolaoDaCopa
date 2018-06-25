@@ -56,7 +56,7 @@ if (get()['id']) {
                         <li><a href="#page-top"></a></li>
                         
                         <li>
-                            <a class="" href="homer.php">Pagina Inicial</a>
+                            <a class="" href="index.php">Pagina Inicial</a>
                         </li>
                         <?php
                         if (isset($_SESSION['login']) && isset($_SESSION['senha'])) {
