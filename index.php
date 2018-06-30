@@ -8,6 +8,9 @@ if (!(isset($_SESSION['login']) && isset($_SESSION['senha']))) {
         abrirDados();
     }
 }
+if (isset($get['abrirDados'])) {
+    abrirDados();
+}
 /*
  * Atualizar dados da session
  */
