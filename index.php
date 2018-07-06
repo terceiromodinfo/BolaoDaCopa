@@ -129,7 +129,11 @@ and open the template in the editor.
                                     $_SESSION['id'] = $apostadores[$i]['id'];
                                     print "";
                                     print "<tr>";
-                                    print "<td>" . ($posicao) . "</td>";
+                                    if (($apostadores[$i]['pontos'] == $apostadores[$i-1]['pontos'])) {
+                                        print "<td></td>";
+                                    }  else {
+                                        print "<td>" . ($posicao) . "</td>";
+                                    }
                                     print "<td><a class='letrasBrancas' href='Apostador.php?id=" . $apostadores[$i]['id'] . "'>" . $apostadores[$i]['nome'] . "</a></td>";
                                     print "<td class='letrasLaranja'>" . $apostadores[$i]['pontos'] . "</td>";
                                     print "</a>";
